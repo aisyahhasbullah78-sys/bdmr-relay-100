@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDMR RELAY 100KM - Cross-County Ultra Relay</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Oswald & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#E53E3E',
+                            accent: '#FF2A2A',
+                            dark: '#0A0A0C',
+                            card: '#121318',
+                            border: '#262833',
+                            gray: '#9CA3AF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Oswald', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Ambient Glow and Background Effects */
+        body {
+            background-color: #060608;
+            color: #F3F4F6;
+            overflow-x: hidden;
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 50% 30%, rgba(229, 62, 62, 0.25) 0%, rgba(10, 10, 12, 0.95) 70%);
+        }
+        .streak-light-left {
+            position: absolute;
+            width: 2px;
+            height: 120%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: rotate(-15deg);
+            filter: blur(1px);
+        }
+        .streak-light-red {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 42, 42, 0.9), transparent);
+            transform: rotate(-12deg);
+            box-shadow: 0 0 15px #FF2A2A;
+        }
+        .glass-card {
+            background: rgba(18, 19, 24, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(229, 62, 62, 0.4);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262833;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E53E3E;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-red selection:text-white">
+
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-brand-border/50 px-4 lg:px-8 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Title Header without Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div>
+                    <span class="block text-sm font-extrabold uppercase tracking-widest text-white font-heading">BERLARI DI MAKASSAR</span>
+                    <span class="block text-xs text-brand-red font-bold">BDMR RELAY 100KM</span>
+                </div>
+            </a>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openShareModal()" class="px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-brand-card hover:bg-gray-800 text-gray-300 border border-brand-border transition">
+                    <i class="fa-solid fa-share-nodes mr-1.5 text-brand-red"></i> Bagikan
+                </button>
+                <button onclick="scrollToRegister()" class="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg bg-brand-red hover:bg-red-600 text-white shadow-lg shadow-red-900/40 transition-transform active:scale-95">
+                    Daftar Sekarang
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Inspired by Poster Visuals) -->
+    <section class="relative min-h-screen pt-24 pb-16 flex items-center justify-center overflow-hidden hero-glow">
+        <!-- Streak Lines FX -->
+        <div class="streak-light-left left-1/4 top-0 opacity-40"></div>
+        <div class="streak-light-red left-1/2 top-0 opacity-70"></div>
+        <div class="streak-light-left right-1/4 top-10 opacity-30"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+            <!-- Dual Runner Icon Silhouette (Image 2) -->
+            <div class="flex justify-center mb-6">
+                <svg class="w-20 h-20 text-brand-red opacity-90 transition-transform hover:scale-110" viewBox="0 0 100 100" fill="currentColor">
+                    <path d="M35,20 C38,20 40,18 40,15 C40,12 38,10 35,10 C32,10 30,12 30,15 C30,18 32,20 35,20 Z M45,28 C42,26 38,26 33,28 L23,33 C21,34 20,36 21,38 C22,40 24,41 26,40 L33,36 L29,48 L18,52 C16,53 15,55 16,57 C17,59 19,60 21,59 L34,54 C36,53 37,51 37,49 L41,36 L46,43 L46,58 C46,60 48,62 50,62 C52,62 54,60 54,58 L54,40 C54,37 52,35 50,33 L45,28 Z"/>
+                    <path d="M65,30 C68,30 70,28 70,25 C70,22 68,20 65,20 C62,20 60,22 60,25 C60,28 62,30 65,30 Z M75,38 C72,36 68,36 63,38 L53,43 C51,44 50,46 51,48 C52,50 54,51 56,50 L63,46 L59,58 L48,62 C46,63 45,65 46,67 C47,69 49,70 51,69 L64,64 C66,63 67,61 67,59 L71,46 L76,53 L76,68 C76,70 78,72 80,72 C82,72 84,70 84,68 L84,50 C84,47 82,45 80,43 L75,38 Z"/>
+                </svg>
+            </div>
+
+            <p class="text-xs sm:text-sm font-bold tracking-[0.35em] text-gray-300 uppercase mb-2">BERLARI DI MAKASSAR</p>
+            
+            <h1 class="text-6xl sm:text-8xl md:text-9xl font-extrabold font-heading tracking-tight leading-none text-white mb-2 uppercase drop-shadow-2xl">
+                BDMR RELAY 100K
+            </h1>
+
+            <p class="text-sm sm:text-xl font-medium tracking-[0.2em] text-brand-red uppercase mb-8">
+                BREAKING BOUNDARIES, MAKING HISTORY
+            </p>
+
+            <!-- Prominent Direct Access Link Card -->
+            <div class="max-w-xl mx-auto mb-8 p-4 rounded-2xl bg-brand-card/90 border border-brand-red/60 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="text-left w-full sm:w-auto">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-brand-red block">Pendaftaran Resmi</span>
+                    <span class="text-xs text-gray-200 font-semibold">Akses Formulir Pendaftaran Tim</span>
+                </div>
+                <div class="flex items-center space-x-2 w-full sm:w-auto">
+                    <a id="hero-direct-link" href="https://forms.gle/bdmr-relay-100k-official" target="_blank" class="flex-1 sm:flex-none px-4 py-2.5 bg-brand-red hover:bg-red-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-red-900/50">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>Buka Form Pendaftaran</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Specs Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto mb-10 text-left">
+                <div class="glass-card p-4 rounded-xl">
+                    <span class="block text-xs uppercase text-brand-gray font-semibold">Total Jarak</span>
+                    <span class="text-2xl sm:text-3xl font-heading font-bold text-white">101 KM</span>
+                    <span class="block text-[10px] text-brand-red">5 Etape Estafet</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl">
+                    <span class="block text-xs uppercase text-brand-gray font-semibold">Tanggal Event</span>
+                    <span class="text-xl sm:text-2xl font-heading font-bold text-white">27 DES 2026</span>
+                    <span class="block text-[10px] text-gray-400">02.30 AM - 19.00 PM</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl">
+                    <span class="block text-xs uppercase text-brand-gray font-semibold">Batas Waktu (COT)</span>
+                    <span class="text-2xl sm:text-3xl font-heading font-bold text-white">15 JAM</span>
+                    <span class="block text-[10px] text-gray-400">Self-Supported</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl">
+                    <span class="block text-xs uppercase text-brand-gray font-semibold">Kuota Tim</span>
+                    <span class="text-2xl sm:text-3xl font-heading font-bold text-brand-red">20 TIM</span>
+                    <span class="block text-[10px] text-gray-400">Eksklusif & Terbatas</span>
+                </div>
+            </div>
+
+            <!-- Call to Actions -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="scrollToRegister()" class="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-600 text-white font-bold text-sm tracking-widest uppercase rounded-xl shadow-xl shadow-red-900/50 transition-all hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-running mr-2"></i> Isi Form Di Web Ini
+                </button>
+                <a href="#concept" class="w-full sm:w-auto px-8 py-4 bg-brand-card hover:bg-gray-800 text-white font-semibold text-sm tracking-wider uppercase rounded-xl border border-brand-border transition">
+                    Pelajari Concept
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONCEPT & ABOUT SECTION -->
+    <section id="concept" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto relative border-t border-brand-border/40">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-red-950/60 border border-red-800/40 text-brand-red text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-flag-checkered mr-2"></i> Self-Supported Relay
+                </div>
+                <h2 class="text-4xl sm:text-5xl font-heading font-bold text-white uppercase tracking-tight">
+                    Makassar & Rute Lintas Kabupaten
+                </h2>
+                <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                    Makassar dan rute lintas kabupaten menjadi panggung estafet menembus dinamika perkotaan hingga lanskap pedesaan. Bersama timmu, kalian akan menempuh jarak <strong>101 kilometer</strong> melintasi perbatasan wilayah, berbagi etape dan setiap cerita di sepanjang rute.
+                </p>
+                <p class="text-gray-400 leading-relaxed text-sm">
+                    Kalian menentukan strateginya. Siapa yang memulai, kapan berganti peran, dan kapan harus menekan pace. Bersiaplah untuk kaki yang lelah, camilan di pinggir jalan, transisi yang seru di setiap Check Point, dan momen penuh sorak semangat dari dalam support vehicle.
+                </p>
+                <div class="p-4 rounded-xl bg-brand-card border border-brand-border flex items-start space-x-3">
+                    <i class="fa-solid fa-shield-halved text-brand-red text-xl mt-1"></i>
+                    <p class="text-xs text-gray-300 leading-normal">
+                        <strong>BDMR Relay 100KM</strong> adalah ajang estafet independen berformat self-supported yang dirancang di atas semangat <em>running culture</em>, kerja sama tim, dan melampaui batas bersama-sama.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Route Visual Breakdown -->
+            <div class="lg:col-span-7">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-brand-border">
+                        <div>
+                            <h3 class="text-lg font-bold text-white uppercase font-heading tracking-wide">Struktur Etape Estafet (101 KM)</h3>
+                            <p class="text-xs text-brand-gray">5 Leg Relay Distribution</p>
+                        </div>
+                        <span class="px-3 py-1 rounded bg-red-900/40 text-brand-red text-xs font-mono font-bold">Start: Nipah PARK</span>
+                    </div>
+
+                    <!-- Etapes Grid -->
+                    <div class="space-y-4">
+                        <!-- Leg 1 -->
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-black/40 border border-brand-border/60 hover:border-brand-red/40 transition">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-8 h-8 rounded-full bg-brand-red text-white font-heading font-bold text-sm flex items-center justify-center">E1</span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-white">Pelari 1 — Etape 1</h4>
+                                    <p class="text-xs text-brand-gray">Nipah PARK Makassar → CP 1 Zone</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold font-mono text-white">±20 KM</span>
+                        </div>
+
+                        <!-- Leg 2 -->
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-black/40 border border-brand-border/60 hover:border-brand-red/40 transition">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-8 h-8 rounded-full bg-gray-800 text-gray-300 font-heading font-bold text-sm flex items-center justify-center">E2</span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-white">Pelari 2 — Etape 2</h4>
+                                    <p class="text-xs text-brand-gray">CP 1 Zone → CP 2 Zone</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold font-mono text-white">±20 KM</span>
+                        </div>
+
+                        <!-- Leg 3 -->
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-black/40 border border-brand-border/60 hover:border-brand-red/40 transition">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-8 h-8 rounded-full bg-gray-800 text-gray-300 font-heading font-bold text-sm flex items-center justify-center">E3</span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-white">Pelari 3 — Etape 3</h4>
+                                    <p class="text-xs text-brand-gray">CP 2 Zone → CP 3 Zone</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold font-mono text-white">±20 KM</span>
+                        </div>
+
+                        <!-- Leg 4 -->
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-black/40 border border-brand-border/60 hover:border-brand-red/40 transition">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-8 h-8 rounded-full bg-gray-800 text-gray-300 font-heading font-bold text-sm flex items-center justify-center">E4</span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-white">Pelari 4 — Etape 4</h4>
+                                    <p class="text-xs text-brand-gray">CP 3 Zone → CP 4 Zone</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold font-mono text-white">±20 KM</span>
+                        </div>
+
+                        <!-- Leg 5 -->
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-red-950/30 border border-red-600/40 hover:border-brand-red transition">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-8 h-8 rounded-full bg-brand-red text-white font-heading font-bold text-sm flex items-center justify-center">E5</span>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-white">Pelari 5 — Final Etape</h4>
+                                    <p class="text-xs text-brand-gray">CP 4 Zone → Finish Gate (Nipah PARK)</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold font-mono text-brand-red">±21 KM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM CATEGORIES SECTION -->
+    <section class="py-16 px-4 lg:px-8 bg-brand-card/40 border-y border-brand-border/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white uppercase tracking-wider mb-3">
+                    KOMPOSISI TIM & KATEGORI
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Setiap tim terdiri dari <strong>5 Pelari</strong>. Urutan pelari (running order) dibebaskan sesuai strategi masing-masing tim.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Podium Category Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden border-2 border-brand-red/50">
+                    <div class="absolute top-0 right-0 bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-bl-lg">
+                        Podium Eligible
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-red-900/40 text-brand-red flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2">KATEGORI PODIUM</h3>
+                    <p class="text-brand-red font-semibold text-sm mb-4">Komposisi Wajib: 1 Wanita & 4 Pria</p>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+                        Tim dengan komposisi wajib 1 Pelari Wanita dan 4 Pelari Pria berhak dan sah untuk memperebutkan posisi Podium (Juara 1, Juara 2, dan Juara 3).
+                    </p>
+                    <div class="flex items-center space-x-2 pt-4 border-t border-brand-border text-xs text-gray-400">
+                        <i class="fa-solid fa-circle-check text-green-500"></i>
+                        <span>Mendapatkan Trophy & Hadiah Podium Resmi</span>
+                    </div>
+                </div>
+
+                <!-- Regular Category Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+                    <div class="w-12 h-12 rounded-xl bg-gray-800 text-gray-300 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-white mb-2">KATEGORI REGULER</h3>
+                    <p class="text-gray-400 font-semibold text-sm mb-4">Komposisi Gender: Bebas (Non-Podium)</p>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+                        Bebas menentukan gender anggota tim (misal 5 Pria, 5 Wanita, atau variasi lainnya). Kategori ini cocok untuk challenge bersama komunitas tanpa beban podium.
+                    </p>
+                    <div class="flex items-center space-x-2 pt-4 border-t border-brand-border text-xs text-gray-400">
+                        <i class="fa-solid fa-circle-info text-brand-red"></i>
+                        <span>Tetap mendapatkan Finisher T-Shirt, Medal & Piagam</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RULES & REGULATIONS SECTION -->
+    <section class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+            <h2 class="text-3xl sm:text-5xl font-heading font-bold text-white uppercase tracking-wider mb-3">
+                RULES & REGULATIONS
+            </h2>
+            <p class="text-gray-400 text-sm">
+                Peraturan resmi pelaksanaan BDMR Relay 100KM demi kelancaran dan keselamatan bersama.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Rule 1: Watch Baton -->
+            <div class="glass-card p-6 rounded-2xl border border-brand-border hover:border-brand-red/50 transition">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-950 text-brand-red flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white font-heading uppercase mb-2">1 Jam Tangan GPS = Tongkat Estafet</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Jam tangan GPS wajib dilepas dan dipasangkan ke pelari berikutnya di tiap Check Point (CP). Rekaman data GPS yang utuh 101 KM dalam <strong>satu device</strong> menjadi syarat mutlak keabsahan finish tim.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 2: Cut Off Time -->
+            <div class="glass-card p-6 rounded-2xl border border-brand-border hover:border-brand-red/50 transition">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-950 text-brand-red flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white font-heading uppercase mb-2">Total COT 15 Jam</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Total Cut Off Time (COT) adalah 15 jam (02.30 AM – 19.00 PM). Tim yang tidak mencapai Relay Zone (CP) atau garis Finish sebelum batas waktu akan dinyatakan <em>Did Not Finish (DNF)</em>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 3: Support Crew & Vehicle -->
+            <div class="glass-card p-6 rounded-2xl border border-brand-border hover:border-brand-red/50 transition">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-950 text-brand-red flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-van-shuttle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white font-heading uppercase mb-2">Support Crew & Vehicle</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Setiap tim diperbolehkan membawa Support Vehicle / Crew Mobilisasi untuk antar-CP dan logistik. Namun <strong>dilarang keras</strong> memberikan bantuan fisik langsung seperti <em>towing</em> atau <em>pacing bike</em> saat pelari bertugas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 4: Traffic & Safety -->
+            <div class="glass-card p-6 rounded-2xl border border-brand-border hover:border-brand-red/50 transition">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-950 text-brand-red flex-shrink-0 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-person-running font-bold"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white font-heading uppercase mb-2">Rute & Peraturan Lalu Lintas</h3>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Seluruh peserta wajib mengikuti rute resmi. Karena rute menembus jalanan publik, utamakan keselamatan dengan mematuhi aturan lalu lintas dan menjaga etika serta menghormati adat istiadat setempat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING & INCLUSIONS SECTION -->
+    <section class="py-16 px-4 lg:px-8 bg-brand-card/60 border-t border-brand-border">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Price Box -->
+                <div class="lg:col-span-5 glass-card p-8 rounded-2xl border-2 border-brand-red text-center relative">
+                    <span class="inline-block px-3 py-1 bg-brand-red text-white text-[10px] font-bold uppercase tracking-widest rounded-full mb-3">
+                        Registration Fee
+                    </span>
+                    <h3 class="text-xs uppercase text-brand-gray font-semibold mb-1">BIAYA PENDAFTARAN REGULER</h3>
+                    <div class="my-4">
+                        <span class="text-5xl font-extrabold font-heading text-white">Rp 750.000</span>
+                        <span class="block text-sm text-brand-red font-semibold mt-1">/ Tim (Rp 150.000 / Runner)</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-6">
+                        Pendaftaran resmi dibuka <strong>4 November 2026</strong>. Terbatas untuk 20 tim tercepat.
+                    </p>
+                    <button onclick="scrollToRegister()" class="w-full py-3 bg-brand-red hover:bg-red-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition shadow-lg shadow-red-900/40">
+                        Isi Form Pendaftaran
+                    </button>
+                </div>
+
+                <!-- Included vs Excluded Grid -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Included -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-white uppercase font-heading tracking-wider flex items-center">
+                            <i class="fa-solid fa-circle-check text-green-500 mr-2"></i> Sudah Termasuk (Included)
+                        </h4>
+                        <ul class="space-y-2 text-xs text-gray-300">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Entry Slot BDMR Relay 100K</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Official Race Pack Collection Team</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Refreshment di Checkpoints</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Official Finisher T-Shirt</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Doorprize Event</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> E-Certificate / Piagam Penghargaan</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-brand-red mr-2"></i> Hadiah Podium (Kategori Podium)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Not Included -->
+                    <div class="space-y-3">
+                        <h4 class="text-sm font-bold text-white uppercase font-heading tracking-wider flex items-center">
+                            <i class="fa-solid fa-circle-xmark text-brand-red mr-2"></i> Tidak Termasuk (Not Included)
+                        </h4>
+                        <ul class="space-y-2 text-xs text-gray-400">
+                            <li class="flex items-start"><i class="fa-solid fa-xmark text-gray-600 mr-2 mt-0.5"></i> Kendaraan pengangkut & pendukung (Support Vehicle / Crew Mobilisasi)</li>
+                            <li class="flex items-start"><i class="fa-solid fa-xmark text-gray-600 mr-2 mt-0.5"></i> Transportasi pribadi ke titik transisi (CP) & Finish</li>
+                            <li class="flex items-start"><i class="fa-solid fa-xmark text-gray-600 mr-2 mt-0.5"></i> Perlengkapan logistik pribadi tim</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE REGISTRATION SECTION -->
+    <section id="register-section" class="py-20 px-4 lg:px-8 max-w-4xl mx-auto relative">
+        <div class="glass-card p-6 sm:p-10 rounded-3xl border border-brand-border">
+            <div class="text-center mb-8">
+                <span class="px-3 py-1 rounded-full bg-brand-red/20 text-brand-red text-xs font-bold uppercase tracking-widest">
+                    Form Pendaftaran Tim
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white uppercase tracking-wider mt-2">
+                    REGISTRASI BDMR RELAY 100K
+                </h2>
+                <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                    Isi data lengkap 5 anggota timmu. 20 tim pertama akan diverifikasi oleh panitia.
+                </p>
+            </div>
+
+            <!-- External Google Form Banner/Manager -->
+            <div class="mb-8 p-4 rounded-xl bg-black/60 border border-brand-border flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-950 text-brand-red flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-xs font-bold text-white uppercase">Link Google Form Resmi</h4>
+                        <p id="current-form-url-display" class="text-[11px] text-gray-400 truncate max-w-xs sm:max-w-md">https://forms.gle/bdmr-relay-100k-official</p>
+                    </div>
+                </div>
+                <div class="flex space-x-2 w-full sm:w-auto">
+                    <button onclick="openFormModal()" class="flex-1 sm:flex-none px-3 py-2 bg-brand-card hover:bg-gray-800 text-white text-xs font-semibold rounded-lg border border-brand-border transition">
+                        <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Link
+                    </button>
+                    <a id="external-form-btn" href="https://forms.gle/bdmr-relay-100k-official" target="_blank" class="flex-1 sm:flex-none px-3 py-2 bg-brand-red hover:bg-red-600 text-white text-xs font-semibold rounded-lg transition text-center">
+                        Buka Form <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Live Form -->
+            <form id="relayRegistrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                <!-- Team Metadata -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-300 mb-1">Nama Tim / Running Club *</label>
+                        <input type="text" id="teamName" required placeholder="Contoh: Makassar Speed Striders" class="w-full px-4 py-3 rounded-xl bg-black/50 border border-brand-border text-white text-sm focus:border-brand-red focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-300 mb-1">Kategori Tim *</label>
+                        <select id="teamCategory" required class="w-full px-4 py-3 rounded-xl bg-black/50 border border-brand-border text-white text-sm focus:border-brand-red focus:outline-none">
+                            <option value="Podium">Kategori Podium (1 Wanita & 4 Pria)</option>
+                            <option value="Reguler">Kategori Reguler (Bebas Gender)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Captain Info -->
+                <div class="p-4 rounded-2xl bg-black/30 border border-brand-border space-y-4">
+                    <h4 class="text-xs font-bold uppercase text-brand-red tracking-wider flex items-center">
+                        <i class="fa-solid fa-user-shield mr-2"></i> Kapten Tim / Contact Person
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-gray-400 mb-1">Nama Kapten Tim *</label>
+                            <input type="text" id="captainName" required placeholder="Nama Lengkap Kapten" class="w-full px-3 py-2.5 rounded-lg bg-black/60 border border-brand-border text-white text-sm focus:border-brand-red focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-gray-400 mb-1">Nomor WhatsApp Kapten *</label>
+                            <input type="tel" id="captainPhone" required placeholder="081234567890" class="w-full px-3 py-2.5 rounded-lg bg-black/60 border border-brand-border text-white text-sm focus:border-brand-red focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5 Runners Input -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-bold uppercase text-white tracking-wider flex items-center">
+                            <i class="fa-solid fa-person-running mr-2 text-brand-red"></i> List 5 Pelari (Sesuai Etape & Ukuran Tee)
+                        </h4>
+                        <button type="button" onclick="openSizeChartModal()" class="text-xs text-brand-red hover:underline font-semibold flex items-center">
+                            <i class="fa-solid fa-ruler-horizontal mr-1"></i> Lihat Paduan Size Chart Finisher Tee
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Runner 1 -->
+                        <div class="grid grid-cols-12 gap-2 items-center">
+                            <span class="col-span-1 text-xs font-mono font-bold text-brand-red">#1</span>
+                            <input type="text" id="runner1" required placeholder="Pelari 1 (Etape 1 ±20KM)" class="col-span-5 px-3 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                            <select id="gender1" class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                            <select id="size1" required class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="" disabled selected>Size Tee</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                                <option value="4XL">4XL</option>
+                                <option value="5XL">5XL</option>
+                            </select>
+                        </div>
+                        <!-- Runner 2 -->
+                        <div class="grid grid-cols-12 gap-2 items-center">
+                            <span class="col-span-1 text-xs font-mono font-bold text-gray-400">#2</span>
+                            <input type="text" id="runner2" required placeholder="Pelari 2 (Etape 2 ±20KM)" class="col-span-5 px-3 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                            <select id="gender2" class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                            <select id="size2" required class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="" disabled selected>Size Tee</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                                <option value="4XL">4XL</option>
+                                <option value="5XL">5XL</option>
+                            </select>
+                        </div>
+                        <!-- Runner 3 -->
+                        <div class="grid grid-cols-12 gap-2 items-center">
+                            <span class="col-span-1 text-xs font-mono font-bold text-gray-400">#3</span>
+                            <input type="text" id="runner3" required placeholder="Pelari 3 (Etape 3 ±20KM)" class="col-span-5 px-3 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                            <select id="gender3" class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                            <select id="size3" required class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="" disabled selected>Size Tee</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                                <option value="4XL">4XL</option>
+                                <option value="5XL">5XL</option>
+                            </select>
+                        </div>
+                        <!-- Runner 4 -->
+                        <div class="grid grid-cols-12 gap-2 items-center">
+                            <span class="col-span-1 text-xs font-mono font-bold text-gray-400">#4</span>
+                            <input type="text" id="runner4" required placeholder="Pelari 4 (Etape 4 ±20KM)" class="col-span-5 px-3 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                            <select id="gender4" class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                            <select id="size4" required class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="" disabled selected>Size Tee</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                                <option value="4XL">4XL</option>
+                                <option value="5XL">5XL</option>
+                            </select>
+                        </div>
+                        <!-- Runner 5 -->
+                        <div class="grid grid-cols-12 gap-2 items-center">
+                            <span class="col-span-1 text-xs font-mono font-bold text-brand-red">#5</span>
+                            <input type="text" id="runner5" required placeholder="Pelari 5 (Final Etape ±21KM)" class="col-span-5 px-3 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                            <select id="gender5" class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                            <select id="size5" required class="col-span-3 px-2 py-2 rounded-lg bg-black/50 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none">
+                                <option value="" disabled selected>Size Tee</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="2XL">2XL</option>
+                                <option value="3XL">3XL</option>
+                                <option value="4XL">4XL</option>
+                                <option value="5XL">5XL</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submission Button -->
+                <button type="submit" class="w-full py-4 bg-brand-red hover:bg-red-600 text-white font-bold text-sm uppercase tracking-widest rounded-xl shadow-xl shadow-red-900/50 transition">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Pendaftaran Tim
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ORGANIZER & FOOTER SECTION -->
+    <footer class="py-12 px-4 lg:px-8 border-t border-brand-border bg-black text-center relative">
+        <div class="max-w-5xl mx-auto space-y-6">
+            <h3 class="text-2xl font-extrabold font-heading text-white tracking-widest uppercase">ULTRA RELAY 100KM</h3>
+
+            <p class="text-xs text-brand-gray tracking-wider uppercase">
+                Organized by <strong class="text-white">Berlari di Makassar</strong>
+            </p>
+
+            <div class="flex flex-wrap justify-center items-center gap-4 text-xs">
+                <a href="https://wa.me/6281244670573" target="_blank" class="px-4 py-2 rounded-xl bg-green-950/60 border border-green-700/50 text-green-400 hover:text-white transition flex items-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Contact Person: +62 812-4467-0573 (Ramli T.B)</span>
+                </a>
+            </div>
+
+            <div class="pt-6 border-t border-brand-border/40 text-[11px] text-gray-500">
+                &copy; 2026 BDMR Relay 100KM. All Rights Reserved. Nipah PARK Makassar.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: EDIT FORM LINK MODAL -->
+    <div id="formModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 rounded-2xl border border-brand-border space-y-4">
+            <h3 class="text-lg font-bold text-white font-heading uppercase">Edit Link Form Pendaftaran</h3>
+            <p class="text-xs text-gray-400">Masukkan URL Google Form atau link pendaftaran eksternal tim Anda di sini.</p>
+            <input type="url" id="customFormInput" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-brand-border text-white text-xs focus:border-brand-red focus:outline-none" placeholder="https://forms.gle/...">
+            <div class="flex justify-end space-x-2 pt-2">
+                <button type="button" onclick="closeFormModal()" class="px-4 py-2 bg-brand-card hover:bg-gray-800 text-gray-300 text-xs font-semibold rounded-lg border border-brand-border transition">Batal</button>
+                <button type="button" onclick="saveCustomFormUrl()" class="px-4 py-2 bg-brand-red hover:bg-red-600 text-white text-xs font-bold uppercase rounded-lg transition">Simpan Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: BAGIKAN LINK MODAL -->
+    <div id="shareModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 rounded-2xl border border-brand-border space-y-4">
+            <h3 class="text-lg font-bold text-white font-heading uppercase">Bagikan BDMR Relay 100KM</h3>
+            <p class="text-xs text-gray-400">Salin link atau langsung bagikan informasi pendaftaran ini ke grup tim running kalian.</p>
+            <div class="flex items-center space-x-2">
+                <input type="text" id="shareUrlInput" readonly class="w-full px-3 py-2 rounded-lg bg-black/60 border border-brand-border text-white text-xs" value="">
+                <button type="button" onclick="copyShareUrl()" class="px-4 py-2 bg-brand-red hover:bg-red-600 text-white text-xs font-bold rounded-lg transition whitespace-nowrap">Salin Link</button>
+            </div>
+            <div class="pt-2 flex justify-end">
+                <button type="button" onclick="closeShareModal()" class="px-4 py-2 bg-brand-card text-gray-300 text-xs rounded-lg border border-brand-border">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: FINISHER TEE SIZE CHART MODAL -->
+    <div id="sizeChartModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card max-w-lg w-full p-6 rounded-2xl border border-brand-border space-y-4 my-8">
+            <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+                <h3 class="text-lg font-bold text-white font-heading uppercase">Paduan Size Chart Finisher Tee</h3>
+                <button onclick="closeSizeChartModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Material Detail -->
+            <div class="p-3 rounded-lg bg-red-950/40 border border-red-900/40 text-center">
+                <span class="text-xs font-bold text-brand-red uppercase">Bahan: Komposisi 100% Cotton Combed</span>
+                <p class="text-[11px] text-gray-300 mt-0.5">Alami, adem, permukaan lebih rata & mampu menyerap keringat dengan baik.</p>
+            </div>
+
+            <!-- Visual Guide Diagrams -->
+            <div class="grid grid-cols-2 gap-3 text-center border-y border-brand-border/40 py-3">
+                <div class="space-y-1">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 stroke-current" viewBox="0 0 100 100" fill="none" stroke-width="3">
+                        <path d="M 25 35 L 35 20 L 65 20 L 75 35 L 68 42 L 62 33 L 62 80 L 38 80 L 38 33 L 32 42 Z"/>
+                        <line x1="38" y1="50" x2="62" y2="50" stroke="#FF2A2A" stroke-width="2"/>
+                        <polygon points="38,50 42,47 42,53" fill="#FF2A2A"/>
+                        <polygon points="62,50 58,47 58,53" fill="#FF2A2A"/>
+                    </svg>
+                    <span class="block text-xs font-bold text-white">Lebar Dada</span>
+                    <span class="block text-[10px] text-gray-400">Diukur dari ketiak kiri ke ketiak kanan</span>
+                </div>
+                <div class="space-y-1">
+                    <svg class="w-16 h-16 mx-auto text-gray-400 stroke-current" viewBox="0 0 100 100" fill="none" stroke-width="3">
+                        <path d="M 25 35 L 35 20 L 65 20 L 75 35 L 68 42 L 62 33 L 62 80 L 38 80 L 38 33 L 32 42 Z"/>
+                        <line x1="50" y1="20" x2="50" y2="80" stroke="#FF2A2A" stroke-width="2"/>
+                        <polygon points="50,20 47,24 53,24" fill="#FF2A2A"/>
+                        <polygon points="50,80 47,76 53,76" fill="#FF2A2A"/>
+                    </svg>
+                    <span class="block text-xs font-bold text-white">Panjang Kaos</span>
+                    <span class="block text-[10px] text-gray-400">Diukur dari pundak atas ke ujung bawah</span>
+                </div>
+            </div>
+
+            <!-- Size Chart Table (Adult Dewasa) -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-gray-300">
+                    <thead class="bg-red-950/80 text-white font-heading uppercase text-xs">
+                        <tr>
+                            <th class="p-2.5 rounded-l-lg">Size</th>
+                            <th class="p-2.5">Lebar</th>
+                            <th class="p-2.5">Panjang</th>
+                            <th class="p-2.5">Lengan Pendek</th>
+                            <th class="p-2.5 rounded-r-lg">Lengan Panjang</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-brand-border/40 font-mono">
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-brand-red">S</td>
+                            <td class="p-2">47 CM</td>
+                            <td class="p-2">70 CM</td>
+                            <td class="p-2">21 CM</td>
+                            <td class="p-2">58 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-white">M</td>
+                            <td class="p-2">49 CM</td>
+                            <td class="p-2">71 CM</td>
+                            <td class="p-2">22 CM</td>
+                            <td class="p-2">59 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-brand-red">L</td>
+                            <td class="p-2">51 CM</td>
+                            <td class="p-2">73 CM</td>
+                            <td class="p-2">23 CM</td>
+                            <td class="p-2">60 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-white">XL</td>
+                            <td class="p-2">53 CM</td>
+                            <td class="p-2">75 CM</td>
+                            <td class="p-2">24 CM</td>
+                            <td class="p-2">61 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-brand-red">2XL</td>
+                            <td class="p-2">56 CM</td>
+                            <td class="p-2">77 CM</td>
+                            <td class="p-2">25 CM</td>
+                            <td class="p-2">62 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-white">3XL</td>
+                            <td class="p-2">60 CM</td>
+                            <td class="p-2">80 CM</td>
+                            <td class="p-2">27 CM</td>
+                            <td class="p-2">63 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-brand-red">4XL</td>
+                            <td class="p-2">63 CM</td>
+                            <td class="p-2">82 CM</td>
+                            <td class="p-2">28 CM</td>
+                            <td class="p-2">64 CM</td>
+                        </tr>
+                        <tr class="hover:bg-brand-card">
+                            <td class="p-2 font-bold text-white">5XL</td>
+                            <td class="p-2">65 CM</td>
+                            <td class="p-2">84 CM</td>
+                            <td class="p-2">30 CM</td>
+                            <td class="p-2">64 CM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-[10px] text-gray-400 italic">
+                * Toleransi ukuran ± 1,5 CM. Harap memastikan ukuran dengan tepat sebelum pendaftaran.
+            </p>
+
+            <button onclick="closeSizeChartModal()" class="w-full py-2.5 bg-brand-card hover:bg-gray-800 text-white font-semibold text-xs rounded-xl border border-brand-border transition">
+                Tutup Paduan Ukuran
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: SUCCESS REGISTRATION MODAL -->
+    <div id="successModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 rounded-2xl border border-brand-red space-y-4 text-center">
+            <div class="w-16 h-16 rounded-full bg-green-950 text-green-400 border border-green-600/50 flex items-center justify-center text-2xl mx-auto">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white font-heading uppercase">Pendaftaran Terkirim!</h3>
+            <p id="successMessageDetails" class="text-xs text-gray-300 leading-relaxed"></p>
+            <button onclick="closeSuccessModal()" class="w-full py-3 bg-brand-red hover:bg-red-600 text-white font-bold text-xs uppercase tracking-widest rounded-xl transition">
+                Selesai
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLLERS -->
+    <script>
+        // Smooth scroll to registration section
+        function scrollToRegister() {
+            document.getElementById('register-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form URL State Management
+        let currentFormUrl = 'https://forms.gle/bdmr-relay-100k-official';
+
+        function openFormModal() {
+            const input = document.getElementById('customFormInput');
+            if (input) {
+                input.value = currentFormUrl;
+            }
+            document.getElementById('formModal').classList.remove('hidden');
+        }
+
+        function closeFormModal() {
+            document.getElementById('formModal').classList.add('hidden');
+        }
+
+        function saveCustomFormUrl() {
+            const inputVal = document.getElementById('customFormInput').value.trim();
+            if (inputVal) {
+                currentFormUrl = inputVal;
+                document.getElementById('current-form-url-display').innerText = currentFormUrl;
+                document.getElementById('external-form-btn').href = currentFormUrl;
+                
+                // Update Hero link as well
+                const heroLink = document.getElementById('hero-direct-link');
+                if (heroLink) {
+                    heroLink.href = currentFormUrl;
+                }
+                
+                closeFormModal();
+            }
+        }
+
+        // Share Link Modal Management
+        function openShareModal() {
+            const input = document.getElementById('shareUrlInput');
+            if (input) {
+                input.value = window.location.href;
+            }
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+
+        function copyShareUrl() {
+            const shareInput = document.getElementById('shareUrlInput');
+            shareInput.select();
+            document.execCommand('copy');
+            alert('Link pendaftaran berhasil disalin!');
+        }
+
+        // Size Chart Modal Management
+        function openSizeChartModal() {
+            document.getElementById('sizeChartModal').classList.remove('hidden');
+        }
+
+        function closeSizeChartModal() {
+            document.getElementById('sizeChartModal').classList.add('hidden');
+        }
+
+        // Handle Registration Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const teamName = document.getElementById('teamName').value;
+            const category = document.getElementById('teamCategory').value;
+            const captainName = document.getElementById('captainName').value;
+            const captainPhone = document.getElementById('captainPhone').value;
+
+            // Validate Podium Rule if chosen
+            if (category === 'Podium') {
+                const genders = [
+                    document.getElementById('gender1').value,
+                    document.getElementById('gender2').value,
+                    document.getElementById('gender3').value,
+                    document.getElementById('gender4').value,
+                    document.getElementById('gender5').value
+                ];
+                const femaleCount = genders.filter(g => g === 'Wanita').length;
+                const maleCount = genders.filter(g => g === 'Pria').length;
+
+                if (femaleCount < 1 || maleCount < 4) {
+                    alert('Catatan Kategori Podium: Wajib minimal 1 Wanita dan 4 Pria. Silakan periksa kembali gender 5 pelari Anda.');
+                    return;
+                }
+            }
+
+            // Collect Finisher Tee Sizes
+            const sizes = [
+                document.getElementById('size1').value,
+                document.getElementById('size2').value,
+                document.getElementById('size3').value,
+                document.getElementById('size4').value,
+                document.getElementById('size5').value
+            ];
+
+            // Construct message info
+            const successMsg = `Tim "${teamName}" (${category}) berhasil didaftarkan oleh Kapten ${captainName} (${captainPhone}). Ukuran Finisher Tee Tim: [${sizes.join(', ')}]. Panitia BDMR Relay 100K akan segera memverifikasi slot tim Anda.`;
+            document.getElementById('successMessageDetails').innerText = successMsg;
+            document.getElementById('successModal').classList.remove('hidden');
+
+            // Reset Form
+            document.getElementById('relayRegistrationForm').reset();
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
